@@ -6,7 +6,7 @@ $tiposMov = [];
 $salidaJson = json_encode(['error' => 'Error de inicio de solicitud.']);
 
 try {
-    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;client_encoding=UTF8";
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -44,5 +44,6 @@ echo $salidaJson;
 
 
 ?>
+
 
 
