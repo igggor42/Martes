@@ -6,9 +6,8 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
-    libpq-dev \
     default-mysql-client \
-    && docker-php-ext-install zip mysqli pdo_mysql pdo_pgsql
+    && docker-php-ext-install zip mysqli pdo_mysql
 
 # Enable Apache modules
 RUN a2enmod rewrite
