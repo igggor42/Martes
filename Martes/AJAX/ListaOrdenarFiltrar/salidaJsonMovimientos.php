@@ -14,7 +14,7 @@ $salidaJson = json_encode(['error' => 'Error de inicio de solicitud.']);
 
 //Conexion PDO
 try {
-    $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -108,4 +108,5 @@ header('Content-Type: application/json');
 echo $salidaJson;
 
 ?>
+
 
