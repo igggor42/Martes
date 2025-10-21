@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <button onclick="declararVarZ()">var z;</button>
+    <button onclick="declararLetQ()">let q;</button>
+    <button onclick="declararVarA()">var a=1;</button>
+    <button onclick="declararVarB()">var b="1";</button>
+    <button onclick="declararVarC()">var c=2;</button>
+    <button onclick="suma1()">suma1=a+b;</button>
+    <button onclick="suma2()">suma2=a+c;</button>
+    
+    <div id="display" style="background-color: lightblue; padding: 20px; margin-top: 20px; border: 1px solid #333;"></div>
+
+    <script>
+        let variables = {};
+        
+        function actualizarDisplay(nombre, valor) {
+            const display = document.getElementById('display');
+            const tipo = typeof valor;
+            display.innerHTML = `<p>Valor de ${nombre}: ${valor}</p><p>Tipo de ${nombre}: ${tipo}</p>`;
+        }
+        
+        function declararVarZ() {
+            variables.z = "z";
+            actualizarDisplay('z', variables.z);
+        }
+        
+        function declararLetQ() {
+            variables.q = "q";
+            actualizarDisplay('q', variables.q);
+        }
+        
+        function declararVarA() {
+            variables.a = 1;
+            actualizarDisplay('a', variables.a);
+        }
+        
+        function declararVarB() {
+            variables.b = "1";
+            actualizarDisplay('b', variables.b);
+        }
+        
+        function declararVarC() {
+            variables.c = 2;
+            actualizarDisplay('c', variables.c);
+        }
+        
+        function suma1() {
+            if (variables.a === undefined || variables.b === undefined) {
+                alert('Error: a o b no están definidas');
+                return;
+            }
+            variables.suma1 = variables.a + variables.b;
+            actualizarDisplay('suma1', variables.suma1);
+        }
+        
+        function suma2() {
+            if (variables.a === undefined || variables.c === undefined) {
+                alert('Error: a o c no están definidas');
+                return;
+            }
+            variables.suma2 = variables.a + variables.c;
+            actualizarDisplay('suma2', variables.suma2);
+        }
+    </script>
+    <button><a href="./">Volver atras</a></button>
+</body>
+</html>

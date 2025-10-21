@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <h2>Asignaremos valor a la variable global desde adentro de una funci n:</h2>
+
+  <button onclick="asignacionConDeclaracion()">Asignacion con declaracion (declaracion + asignacion)</button>
+  <button onclick="asignacionSinDeclaracion()">Asignacion forzada sin declaracion</button>
+  <button onclick="mostrarGlobal()">Muestra variable global</button>
+  
+  <script>
+    var global;
+
+    function asignacionConDeclaracion() {
+      var global = prompt("Ingrese un valor (variable local)");
+      alert("Valor local dentro de la funcion: " + global);
+    }
+
+    function asignacionSinDeclaracion() {
+      global = prompt("Ingrese un valor (variable global)");
+      alert("Valor guardado como global: " + global);
+    }
+    function mostrarGlobal() {
+      if (global === undefined) {
+        alert("La variable global no tiene valor");
+      } else {
+        alert("Variable global: " + global);
+      }
+    }
+  </script>
+  <div><button><a href="./">Volver atras</a></button></div>
+  
+</body>
+</html>

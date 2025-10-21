@@ -1,0 +1,17 @@
+h1 {
+    color: rgb(205, 131, 34);
+    font-size: 2em;
+    margin-bottom: 1em;
+    text-align: center;
+    border: 1px solid black;
+    background-color: lightgray
+}
+
+p {
+    color: rgb(255, 0, 0);
+    font-size: 1em;
+    margin-bottom: 1em;
+    width: 100%;
+    border: 1px solid black;
+    padding: 2px;
+}

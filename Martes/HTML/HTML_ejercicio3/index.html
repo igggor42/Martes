@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Html</title>
+</head>
+<body>
+    <h1>Formulario Html</h1>
+    
+    <form action="respuesta_formulario.html" method="get">
+        <h2>Entradas simples</h2>
+        
+        <ul>
+            <li>
+                <label>Apellidos:</label><br>
+                <input type="text" name="apellidos" size="25">
+            </li>
+            <br>
+            
+            <li>
+                <label>Contraseña:</label><br>
+                <input type="password" name="contrasena" size="25">
+            </li>
+            <br>
+            
+            <li>
+                <label>Oculto:</label><br>
+                <input type="hidden" name="oculto">
+            </li>
+            <br>
+            
+            <li>
+                <label>Campo deshabilitado:</label><br>
+                <input type="text" name="deshabilitado" value="valor deshabilitado" disabled size="25">
+            </li>
+            <br>
+            
+            <li>
+                <label>Campo de solo lectura:</label><br>
+                <input type="text" name="solo_lectura" value="Solo lectura pero enviando dato" readonly size="35">
+            </li>
+        </ul>
+        
+        <h2>Entradas de selección</h2>
+        
+        <ul>
+            <li>
+                <label>Practica deportes</label><br>
+                <input type="checkbox" name="deportes">
+            </li>
+            <br>
+            
+            <li>
+                <label>Practica musical</label><br>
+                <input type="checkbox" name="musical">
+            </li>
+            <br>
+            
+            <li>
+                <label>Practica de pintura artística</label><br>
+                <input type="checkbox" name="pintura">
+            </li>
+            <br>
+            
+            <li>
+                <label>Sexo</label><br>
+                <input type="radio" name="sexo" value="masculino"> Masculino
+                <input type="radio" name="sexo" value="femenino"> Femenino
+            </li>
+            <br>
+            
+            <li>
+                <label>Estudios cursados</label><br>
+                <select name="estudios">
+                    <option value="primaria">Primaria</option>
+                    <option value="secundaria">Secundaria</option>
+                    <option value="universitaria">Universitaria</option>
+                </select>
+            </li>
+            <br>
+            
+            <li>
+                <label>Fecha y Hora</label><br>
+                <input type="date" name="fecha"> <input type="time" name="hora">
+            </li>
+            <br>
+            
+            <li>
+                <label>Color</label><br>
+                <input type="color" name="color">
+            </li>
+        </ul>
+        
+        <h2>Entradas con validación</h2>
+        
+        <ul>
+            <li>
+                <label>Comentario (validacion por requerido):</label><br>
+                <textarea name="comentario" rows="3" cols="40" required placeholder="algo"></textarea>
+            </li>
+            <br>
+            
+            <li>
+                <label>Email con doble validacion (x@x y required):</label><br>
+                <input type="email" name="email" placeholder="algo@algonas" required size="30">
+            </li>
+            <br>
+            
+            <li>
+                <label>Numero entero limitado (validacion por tipo numerico y cotas):</label><br>
+                <input type="number" name="numero" min="1" max="100" required size="20" placeholder="3">
+            </li>
+            <br>
+            
+            <li>
+                <label>Numero decimal:</label><br>
+                <input type="number" name="decimal" step="0.1" size="20" placeholder="8.3">
+            </li>
+            <br>
+            
+            <li>
+                <label>URL (validacion por requerido, escribir http://):</label><br>
+                <input type="url" name="url" required size="30" placeholder="http://algo">
+            </li>
+            <br>
+            
+            <li>
+                <label>Pattern de validacion:</label><br>
+                <input type="text" name="pattern1" pattern="[0-9]{4}" size="20" placeholder="cfgz1">
+            </li>
+            <br>
+            
+            <li>
+                <label>Teléfono (formato: +54 9 12345678):</label><br>
+                <input type="tel" name="telefono" pattern="\+54\s[0-9]{1}\s[0-9]{8}" size="30" placeholder="+54 9 12345678" required>
+            </li>
+        </ul>
+        
+        <br>
+        <input type="submit" value="Enviar">
+    </form>
+
+    <br>
+    <footer>
+       <a href="../index.html">
+        volver atras
+    </a>
+    </footer>
+</body>
+</html>

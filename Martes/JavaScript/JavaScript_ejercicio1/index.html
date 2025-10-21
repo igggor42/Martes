@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo con document.write()</title>
+</head>
+<body>
+  <h2>Texto1 escrito directamente en HTML</h2>
+   
+  <script>
+    alert("Primer alert antes de lanzar el HTML");
+
+    document.write("<h2>Texto2. Mensaje escrito desde JavaScript utilizando el método write().</h2>");
+    document.write("No pisa al documento porque aún no terminó el flujo de escritura del navegador<br><br>");
+
+    alert("SEGUNDA ALERTA");
+
+    document.write("<h2>Texto 4 escrito en HTML escrito después de presentar el alert('SEGUNDA ALERTA')</h2>");
+    document.write("<h2>Texto5. Otra escritura con método write() aplicado al documento.</h2>");
+    document.write("El texto escrito con write no pisa al documento porque aún no terminó el flujo de escritura del navegador<br><br>");
+    document.write("El flujo de escritura sobre el navegador termina un tiempo determinado después de la lectura de la última línea del documento y de haber cerrado todas las ventanas modales de tipo alert().");
+ 
+  </script>
+<div> <a href="./">Volver atras</a> </div>
+</body>
+</html>

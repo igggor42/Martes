@@ -1,0 +1,39 @@
+     body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px;
+        }
+        h1, h2, h3 { 
+            color: #000; 
+        }
+        .objeto-nombre {
+            color: #0000ff;
+            font-weight: bold;
+        }
+        table { 
+            border-collapse: collapse; 
+            margin: 20px 0;
+        }
+        table td, table th { 
+            border: 1px solid #333; 
+            padding: 8px;
+        }
+        table th {
+            background-color: #f0f0f0;
+        }
+        .info {
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        button {
+            background-color: #000000ff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button a {
+            color: white;
+            text-decoration: none;
+        }

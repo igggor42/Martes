@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Preguntas y referencias sobre protocolo HTTP</title>
+    </head>
+
+    <body>
+        <header>
+            <h1>Preguntas y referencias sobre protocolo HTTP</h1>
+        </header>
+
+        <section>
+            <h2>
+                Sección de referencias de interés, anidar todas estas
+                referencias dentro de una etiqueta semántica de navegación nav
+                /nav
+            </h2>
+
+            <p>Abrir enlaces en nuevas pestañas</p>
+            <ul>
+                <li>
+                    <a
+                        href="https://www.cloudflare.com/learning/ddos/glossary/hypertext-transfer-protocol-http/"
+                        target="_blank"
+                        >Cloudflare</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="https://www.azion.com/es/learning/ddos/que-es-http/"
+                        target="_blank"
+                        >Azion</a
+                    >
+                </li>
+            </ul>
+        </section>
+
+        <hr />
+        <section>
+            <h2>Sección de Preguntas sobre HTTP</h2>
+            <ul>
+                <li>
+                    <h4>
+                        Sobre qué protocolo binario está montado el protocolo
+                        HTTP?
+                    </h4>
+                    <p>
+                        Esta montado sobre el protocolo TCP, el cual resuelve
+                        las solicitudes cliente-servidor.
+                    </p>
+                    <br />
+                </li>
+                <li>
+                    <h4>
+                        Cuáles son los clientes HTTP y los servidores HTTP más
+                        utilizados?
+                    </h4>
+                    <p>
+                        Del lado del <b>cliente</b> se encuentra el navegador y
+                        por el lado del <b>Servidor</b> encontramos los Web
+                        Server
+                    </p>
+                    <br />
+                </li>
+                <li>
+                    <h4>
+                        Qué verbos admite un comando en el requerimiento HTTP?
+                    </h4>
+                    <p>
+                        Los verbos que admite son: GET - PUT - DELETE - POST -
+                        CONNECT
+                    </p>
+                    <br />
+                </li>
+                <li>
+                    <h4>
+                        Qué contenido lleva el body de un requerimiento HTTP?
+                    </h4>
+                    <p>
+                        El body puede contener datos en cualquier formato, por
+                        ejemplo:
+                        <br />
+                        Datos ingresados en campos de un formulario <br />
+                        Files enviados en un proceso de upload <br />
+                    </p>
+                    <br />
+                </li>
+                <li>
+                    <h4>Qué diferencia existe entre un URL y un URI?</h4>
+                    <p>
+                        El campo <b>URL</b> contiene al conjunto
+                        <b>nombre de referencia +</b> la <b>URI</b>, y este
+                        ultimo es el que hace referencia a la ubicacion de un
+                        recurso y sus valores <br />
+                        <b>Ejemplo: </b>http://nombreHost.dominioHost:puerto +
+                        URI
+                    </p>
+                    <br />
+                </li>
+                <li>
+                    <h4>
+                        En qué variables quedan almacenados datos de las
+                        respuestas http?
+                    </h4>
+                    <p>
+                        El Header contiene toda la información relativa a la
+                        codificacion de los mensajes (metadatos)
+                    </p>
+                    <br />
+                </li>
+                <li>
+                    <h4>Qué significa Virtual hosting?</h4>
+                    <p>
+                        Virtual hosting es el termino que se utiliza para para
+                        utilizar multiples dominios sobre una misma IP.Los
+                        servidores WEB que corren http 1.1 pueden atender
+                        múltiples dominios sobre una misma ip. En el caso de
+                        usar hosts virtuales habrá que declarar el nombre de
+                        host de un servidor de DNS Público
+                    </p>
+                    <br />
+                </li>
+                <li>
+                    <h4>Por qué el HTTP se considera STATE LESS?</h4>
+                    <p>
+                        HTTP se considera State Less (sin estado) porque el
+                        servidor no mantiene ningún estado de las solicitudes
+                        anteriores, esto significa que cada solicitud se trata
+                        como una transacción independiente.
+                    </p>
+                    <br />
+                </li>
+                <li>
+                    <h4>
+                        Cómo va a mejorar la velocidad de la WEB en poco tiempo?
+                    </h4>
+                    <p>
+                        Con HTTP/3 y QUIC se podra lograr una mayor velocidad de
+                        la web.
+                    </p>
+                    <br />
+                </li>
+                <li>
+                    <h4>
+                        Cómo va a mejorar el comportamiento de una aplicación
+                        WEB en ambientes ruidosos o de débil conexión?
+                    </h4>
+                    <p>
+                        Con HTTP/3 y QUIC va a mejorar la velocidad no se va a
+                        notar tanto como de HTTP/1.1 a HTTP/2, pero va a suponer
+                        una mejora sobre todo en situaciones en las que se
+                        produzcan errores en la transmisión,como en conexiones
+                        débiles o inestables, algo muy importante,teniendo en
+                        cuenta que el móvil es el medio preferido de navegación
+                        de los usuarios y que no siempre se dan las mejores
+                        condiciones de cobertura . <br />
+                        En ambientes con mucho ruido electromagnético, las
+                        conexiones largas producen gran cantidad de paquetes
+                        repetidos por falta de confirmaci ón por parte de los
+                        receptores , esto se traduce en grandes retardos en la
+                        transmisión de datos. Quic produce conexiones UDP mucho
+                        mas cortas, eficientes y de facil establecimiento,
+                        ideales para la transmisión de las partes constitutivas
+                        de un documento HTML.
+                    </p>
+                    <br />
+                </li>
+            </ul>
+        </section>
+        <hr />
+        <section>
+            <h2>Sección de imágenes representativas del protocolo</h2>
+            <p>
+                En esta sección mostramos imágenes representativas del protocolo
+                HTTP
+            </p>
+            <img src="http1.png" alt="Imagen representativa 1" />
+            <img src="http2.png" alt="Imagen representativa 2" />
+        </section>
+        <hr />
+        <section>
+            <h2>Sección de videos representativos del protocolo</h2>
+            <a href="https://www.youtube.com/watch?v=eesqK59rhGA" target="_blank">Ver video sobre protocolo HTTP en YouTube</a>
+        </section>
+        <hr />
+        
+        <footer>
+            <h2>Datos del alumno</h2>
+            <p>Nombre: Igor Boschetti</p>
+            <p>Correo : igor.boschetti@comunidad.ub.edu.ar</p>
+            <a href="../index.html">
+        volver atras
+    </a>
+        </footer>
+    </body>
+</html>
