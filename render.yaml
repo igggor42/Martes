@@ -1,4 +1,22 @@
 services:
+  - type: pserv
+    name: mysql-stock-db
+    env: docker
+    dockerfilePath: |
+      FROM mysql:8.0
+      COPY Martes/AJAX/ListaOrdenarFiltrar/init-mysql.sql /docker-entrypoint-initdb.d/
+    plan: free
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        value: root_password
+      - key: MYSQL_DATABASE
+        value: stock_db
+      - key: MYSQL_USER
+        value: stock_user
+      - key: MYSQL_PASSWORD
+        value: stock_password
+    command: --default-authentication-plugin=mysql_native_password
+
   - type: web
     name: stock-management-app
     env: docker
@@ -21,21 +39,3 @@ services:
         value: stock_password
     healthCheckPath: /AJAX/ListaOrdenarFiltrar/index.php
     autoDeploy: true
-
-  - type: pserv
-    name: mysql-stock-db
-    env: docker
-    dockerfilePath: |
-      FROM mysql:8.0
-      COPY Martes/AJAX/ListaOrdenarFiltrar/init-mysql.sql /docker-entrypoint-initdb.d/
-    plan: free
-    envVars:
-      - key: MYSQL_ROOT_PASSWORD
-        value: root_password
-      - key: MYSQL_DATABASE
-        value: stock_db
-      - key: MYSQL_USER
-        value: stock_user
-      - key: MYSQL_PASSWORD
-        value: stock_password
-    command: --default-authentication-plugin=mysql_native_password
