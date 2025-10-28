@@ -20,7 +20,6 @@ services:
     ports:
       - "8080:80"
     volumes:
-      # Montar el repositorio completo para acceder a todos los ejercicios
       - ./Martes:/var/www/html
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html
