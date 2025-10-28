@@ -1,7 +1,7 @@
 <?php
-// Database configuration for MySQL
+// Database configuration for PostgreSQL
 $dbname = getenv('DB_NAME') ?: "stock_db"; 
-$host = getenv('DB_HOST') ?: "mysql"; 
+$host = getenv('DB_HOST') ?: "postgres"; 
 $user = getenv('DB_USER') ?: "stock_user"; 
 $password = getenv('DB_PASSWORD') ?: "stock_password"; 
-$port = "3306";
+$port = getenv('DB_PORT') ?: "5432";
