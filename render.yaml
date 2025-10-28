@@ -11,8 +11,11 @@ services:
     envVars:
       - key: APACHE_DOCUMENT_ROOT
         value: /var/www/html
+      # Apunta al nombre del servicio pserv de postgres
       - key: DB_HOST
-        value: mysql
+        value: postgres-db
+      - key: DB_PORT
+        value: 5432
       - key: DB_NAME
         value: stock_db
       - key: DB_USER
@@ -23,19 +26,18 @@ services:
     autoDeploy: true
 
   - type: pserv
-    name: mysql
+    name: postgres-db
     env: docker
     dockerfilePath: |
-      FROM mysql:8.0
-      COPY Martes/AJAX/ListaOrdenarFiltrar/init-mysql.sql /docker-entrypoint-initdb.d/
+      FROM postgres:14-alpine
+      # Copia el nuevo script de inicialización de Postgres
+      COPY Martes/AJAX/ListaOrdenarFiltrar/init-postgres.sql /docker-entrypoint-initdb.d/
     plan: free
     envVars:
-      - key: MYSQL_ROOT_PASSWORD
-        value: root_password
-      - key: MYSQL_DATABASE
+      # Variables de entorno para PostgreSQL
+      - key: POSTGRES_DB
         value: stock_db
-      - key: MYSQL_USER
+      - key: POSTGRES_USER
         value: stock_user
-      - key: MYSQL_PASSWORD
+      - key: POSTGRES_PASSWORD
         value: stock_password
-    command: --default-authentication-plugin=mysql_native_password
