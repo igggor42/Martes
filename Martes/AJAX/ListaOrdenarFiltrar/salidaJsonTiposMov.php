@@ -19,7 +19,10 @@ try {
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
     while ($fila = $stmt->fetch()) {
-        $tiposMov[] = $fila; 
+    $objTipo = new stdClass();
+    $objTipo->IdMov = $fila['idmov'];
+    $objTipo->Descripcion = $fila['descripcion'];
+    $tiposMov[] = $objTipo;
     }
 
     $objSalida = new stdClass();
@@ -45,3 +48,4 @@ echo $salidaJson;
 
 
 ?>
+
