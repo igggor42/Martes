@@ -1,19 +1,19 @@
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql-stock-db
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres-stock-db
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: stock_db
-      MYSQL_USER: stock_user
-      MYSQL_PASSWORD: stock_password
+      POSTGRES_DB: stock_db
+      POSTGRES_USER: stock_user
+      POSTGRES_PASSWORD: stock_password
     ports:
-      - "3307:3306"
+      # Mantenemos el puerto local 3307 por consistencia, pero apunta al 5432 de Postgres
+      - "3307:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./Martes/AJAX/ListaOrdenarFiltrar/init-mysql.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+      # Usamos el nuevo script de inicialización de Postgres
+      - ./Martes/AJAX/ListaOrdenarFiltrar/init-postgres.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
-    command: --default-authentication-plugin=mysql_native_password
 
   php-app:
     build: .
@@ -23,14 +23,16 @@ services:
       - ./Martes:/var/www/html
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html
-      - DB_HOST=mysql
+      # El host ahora es el nombre del servicio de postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
       - DB_NAME=stock_db
       - DB_USER=stock_user
       - DB_PASSWORD=stock_password
     depends_on:
-      - mysql
+      - postgres
     restart: unless-stopped
     container_name: php-exercises-app
 
 volumes:
-  mysql_data:
+  postgres_data:
