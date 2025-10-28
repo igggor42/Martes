@@ -79,17 +79,18 @@ try {
     $movimientos = [];
     
     while ($fila = $stmt->fetch()) {
-        $objMov = new stdClass();
-        $objMov->CodArticulo = $fila['CodArticulo'];
-        $objMov->Descripcion = $fila['Descripcion'];
-        $objMov->NroDeLote = $fila['NroDeLote'];
-        $objMov->FechaMovimiento = $fila['FechaMovimiento'];
-        $objMov->UnidadMedida = $fila['UnidadMedida'];
-        $objMov->Cantidad = $fila['Cantidad'];
-        $objMov->FotoArticulo = $fila['FotoArticulo'];
-        $objMov->TipoMovimiento = $fila['TipoMovimiento'];
-        
-        array_push($movimientos, $objMov);
+    $objMov = new stdClass();
+    $objMov->CodArticulo = $fila['codarticulo'];
+    $objMov->Descripcion = $fila['descripcion'];
+    $objMov->NroDeLote = $fila['nrodelote'];
+    $objMov->FechaMovimiento = $fila['fechamovimiento'];
+    $objMov->UnidadMedida = $fila['unidadmedida'];
+    $objMov->Cantidad = $fila['cantidad'];
+    $objMov->FotoArticulo = $fila['fotoarticulo'];
+    // El alias 'AS TipoMovimiento' también se convierte a minúsculas
+    $objMov->TipoMovimiento = $fila['tipomovimiento']; 
+
+    array_push($movimientos, $objMov);
     }
     
     $objSalida = new stdClass();
@@ -114,3 +115,4 @@ header('Content-Type: application/json');
 echo $salidaJson;
 
 ?>
+
