@@ -6,11 +6,12 @@ $tiposMov = [];
 $salidaJson = json_encode(['error' => 'Error de inicio de solicitud.']);
 
 try {
-    $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
+    // DSN actualizado para PostgreSQL
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    //Consulta SQL para obtener los TipoDeMov
+    //Consulta SQL (es estándar, no necesita cambios)
     $sql = "SELECT IdMov, Descripcion FROM TipoDeMov ORDER BY Descripcion"; 
     
     $stmt = $dbh->prepare($sql);
@@ -29,7 +30,7 @@ try {
     $dbh = null;
 
 } catch (PDOException $e) {
-    $log_errores = date("Y-m-d H:i") . " " . "Error al cargar tipos de movimiento: " . $e->getMessage() . "\n";
+    $log_errores = date("Y-m-d H:i") . " " . "Error al cargar tipos de movimiento: "." [DSN: $dsn] ".$e->getMessage() . "\n";
     
     $puntero = fopen("./errores.log", "a");
     fwrite($puntero, $log_errores);
@@ -44,4 +45,3 @@ echo $salidaJson;
 
 
 ?>
-
