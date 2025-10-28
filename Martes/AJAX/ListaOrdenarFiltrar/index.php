@@ -279,61 +279,32 @@
 
 
     function cargaTabla() {
-
         const objDatosOrdenFiltros = getFilterData();
-
         
-
         tbody.innerHTML = '<tr><td colspan="7">Esperando respuesta del servidor</td></tr>';
 
-
-
-        alert("Disparo AJAX con datos:\n" + objDatosOrdenFiltros.toString());
-
-
-
         fetch(URL_MOVIMIENTOS, {
-
             method: 'POST', 
-
             headers: {
-
                 'Content-Type': 'application/x-www-form-urlencoded',
-
             },
-
             body: objDatosOrdenFiltros,
-
         })
-
         .then(response => {
-
             if (!response.ok) {
-
                 throw new Error('Respuesta de red no fue exitosa. Código: ' + response.status);
-
             }
-
-            return response.json();
-
+            // Volvemos a response.json() directamente
+            return response.json(); 
         })
-
         .then(data => {
-
-            alert("JSON recibido:\n" + JSON.stringify(data, null, 2));
-
-            renderTable(data);
-
+            // Ya no hay alerts, solo se renderiza la tabla
+            renderTable(data); 
         })
-
         .catch(error => {
-
             console.error('Error producido:', error);
-
-            tbody.innerHTML = '<tr style="color: red;"><td colspan="7">Error en la solicitud al servidor. Consulte la consola y errores.log.</td></tr>';
-
+            tbody.innerHTML = '<tr style="color: red;"><td colspan="7">Error en la solicitud al servidor. Consulte la consola.</td></tr>';
         });
-
     }
 
 
@@ -391,5 +362,6 @@
 </body>
 
 </html>
+
 
 
