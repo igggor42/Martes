@@ -12,7 +12,7 @@ services:
       - key: APACHE_DOCUMENT_ROOT
         value: /var/www/html
       - key: DB_HOST
-        value: mysql-stock-db
+        value: mysql
       - key: DB_NAME
         value: stock_db
       - key: DB_USER
@@ -23,7 +23,7 @@ services:
     autoDeploy: true
 
   - type: pserv
-    name: mysql-stock-db
+    name: mysql
     env: docker
     dockerfilePath: |
       FROM mysql:8.0
