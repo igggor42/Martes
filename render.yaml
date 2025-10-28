@@ -1,19 +1,16 @@
 services:
   - type: web
-    name: stock-management-app
+    name: Martes
     env: docker
     dockerfilePath: ./Dockerfile
     plan: free
     region: oregon
     branch: main
-    buildCommand: ""
-    startCommand: ""
     envVars:
       - key: APACHE_DOCUMENT_ROOT
         value: /var/www/html
-      # Apunta al nombre del servicio pserv de postgres
       - key: DB_HOST
-        value: postgres-db
+        value: my-app-db
       - key: DB_PORT
         value: 5432
       - key: DB_NAME
@@ -26,15 +23,13 @@ services:
     autoDeploy: true
 
   - type: pserv
-    name: postgres-db
+    name: my-app-db
     env: docker
     dockerfilePath: |
       FROM postgres:14-alpine
-      # Copia el nuevo script de inicialización de Postgres
       COPY Martes/AJAX/ListaOrdenarFiltrar/init-postgres.sql /docker-entrypoint-initdb.d/
     plan: free
     envVars:
-      # Variables de entorno para PostgreSQL
       - key: POSTGRES_DB
         value: stock_db
       - key: POSTGRES_USER
