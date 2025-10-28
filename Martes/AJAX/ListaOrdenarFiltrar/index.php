@@ -156,11 +156,27 @@
             if (!response.ok) {
                 throw new Error('Respuesta de red no fue exitosa. Código: ' + response.status);
             }
-            return response.json();
+            // ¡CAMBIO IMPORTANTE! Leemos la respuesta como TEXTO, no como JSON.
+            return response.text();
         })
-        .then(data => {
-            alert("JSON recibido:\n" + JSON.stringify(data, null, 2));
-            renderTable(data);
+        .then(text => {
+            // ¡NUEVO ALERT! Esto nos mostrará el error de PHP.
+            alert("Respuesta CRUDA del servidor:\n" + text);
+            
+            // Ahora intentamos convertir el texto a JSON
+            try {
+                const data = JSON.parse(text);
+                
+                // El alert original, ahora dentro del try
+                alert("JSON recibido (parseado):\n" + JSON.stringify(data, null, 2));
+                renderTable(data);
+
+            } catch (e) {
+                // Si el JSON.parse falla, es un error.
+                console.error('Error al parsear JSON:', e);
+                console.error('Texto recibido:', text);
+                tbody.innerHTML = `<tr style="color: red;"><td colspan="7">Error: El servidor no devolvió un JSON válido. La respuesta cruda está en el alert anterior y en la consola.</td></tr>`;
+            }
         })
         .catch(error => {
             console.error('Error producido:', error);
@@ -195,4 +211,5 @@
 
 </body>
 </html>
+
 
