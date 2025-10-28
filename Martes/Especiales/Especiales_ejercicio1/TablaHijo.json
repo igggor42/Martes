@@ -1,0 +1,24 @@
+{
+  "TipoDeMov": [
+    {
+      "IdMov": 1,
+      "Codigo": "ENT",
+      "Descripcion": "Entrada de stock"
+    },
+    {
+      "IdMov": 2,
+      "Codigo": "SAL",
+      "Descripcion": "Salida de stock"
+    },
+    {
+      "IdMov": 3,
+      "Codigo": "REUBICACION",
+      "Descripcion": "Reubicación"
+    },
+    {
+      "IdMov": 4,
+      "Codigo": "AJUSTE_INV",
+      "Descripcion": "Ajuste de inventario"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <h3>Introducir un valor en el cuadro de texto y luego pulsar el botón para ejecutar el procedimiento correspondiente</h3>
+    
+    <input type="number" id="inputValue" placeholder="Introduce un número">
+    
+    <button onclick="mostrarValor()">Muestra valor</button>
+    <button onclick="suma1()">Suma 1</button>
+    <button onclick="elevadoX2()">x^2</button>
+    <button onclick="multiplicaX2()">Multiplica * 2</button>
+    <button onclick="dosPotencia()">2^x</button>
+    <div style="margin-top: 20px;">
+        <button><a href="./">Volver atras</a></button>
+    </div>
+    <script>
+        function mostrarValor() {
+            alert('El valor actual es: ' + document.getElementById('inputValue').value);
+        }
+        
+        function suma1() {
+            const input = document.getElementById('inputValue');
+            const valor = parseFloat(input.value);
+            if (isNaN(valor)) {
+                alert('Por favor introduce un número válido');
+                return;
+            }
+            const resultado = valor + 1;
+            input.value = resultado;
+        }
+        
+        function elevadoX2() {
+            const input = document.getElementById('inputValue');
+            const valor = parseFloat(input.value);
+            if (isNaN(valor)) {
+                alert('Por favor introduce un número válido');
+                return;
+            }
+            const resultado = Math.pow(valor, 2);
+            input.value = resultado;
+        }
+        
+        function multiplicaX2() {
+            const input = document.getElementById('inputValue');
+            const valor = parseFloat(input.value);
+            if (isNaN(valor)) {
+                alert('Por favor introduce un número válido');
+                return;
+            }
+            const resultado = valor * 2;
+            input.value = resultado;
+        }
+        
+        function dosPotencia() {
+            const input = document.getElementById('inputValue');
+            const valor = parseFloat(input.value);
+            if (isNaN(valor)) {
+                alert('Por favor introduce un número válido');
+                return;
+            }
+            if (valor > 1000) {
+                alert('El número es demasiado grande para calcular 2^' + valor);
+                return;
+            }
+            const resultado = Math.pow(2, valor);
+            input.value = resultado;
+        }
+    </script>
+    
+<div><button><a href="./">Volver atras</a></button></div>
+</body>
+</html>

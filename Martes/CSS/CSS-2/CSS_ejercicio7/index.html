@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        header
+        {
+            background-color: rgb(41, 146, 187);
+            text-align: center;
+            height: 70px;
+        }
+
+        .contenedor {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            background: rgb(255, 255, 255);
+            flex: 1 1 auto;
+            overflow: hidden; 
+        }
+
+
+        form {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            border-style: solid;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        label
+        {
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .data {
+            text-align: left;
+            border-style: solid;
+            border-color: gray;
+            border-width: 1px;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+
+
+        .data .lineal
+        {
+            display: inline;
+        }
+
+        .control__btn
+        {
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           background-color: rgb(41, 146, 187);
+           border-style: solid;
+        }
+
+        .control__btn .btn
+        {
+            height: 45px;
+            width: 20%;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #AAAAAA;
+        }
+
+        footer {
+            text-align: center;
+            background-color:rgb(166, 34, 34);
+            height: 60px;
+            justify-content: center;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+
+
+        @media (min-width: 1000px) {
+            .data {
+                width: 20%;
+            }
+        }
+
+        @media (min-width: 700px) and (max-width: 900px) {
+            .data {
+                width: 33.33%;
+            }
+        }
+
+        @media (min-width: 500px) and (max-width: 700px) {
+            .data {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .data {
+                width: 100%;
+            }
+
+
+            body {
+                overflow: auto;
+            }
+
+            form {
+            
+                height: auto;
+                min-height: 100vh;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .contenedor {
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+    <title>Css27 Form RWD</title>
+</head>
+<body>
+    
+    <form action="#" class="form" method="GET">
+        <header>
+            <h1>Formulario RWD</h1>
+        </header>
+    <div class="contenedor">
+            <div class="data">
+                <label for="apellido">1-Apellido:</label>
+                <input type="text" name="apellido">                
+            </div>
+
+            <div class="data">
+                <label for="nombre">2-Nombre:</label>
+                <input type="text" name="nombre">                
+            </div>
+
+            <div class="data">
+                <label for="pwd">3-Contraseña</label>
+                <input type="password" name="pwd">                
+            </div>
+
+            <div class="data">
+                <label for="null">4-Campo Deshabilitado</label>
+                <input type="text" name="null" disabled>
+            </div>
+
+            <div class="data">
+                <label for="date">5-Fecha y Hora</label>
+                <input type="date" name="date">
+            </div>
+
+            <div class="data">
+                <label for="dni">6-DNI</label>
+                <input type="number" name="dni">                
+            </div>
+
+            <div class="data">
+                <label for="actividades">7-Actividades Extracurriculares</label>
+                <label for="musica">Musica</label>
+                <input type="checkbox" name="musica" id="">
+                <label for="pintura">Pintura Artistica</label>
+                <input type="checkbox" name="pintura" id="">
+                <label for="deporte">Deportes</label>
+                <input type="checkbox" name="deporte" id="">
+                <label for="teatro">Teatro</label>
+                <input type="checkbox" name="teatro" id="">
+            </div>
+
+            <div class="data">
+                <label for="sexo">8-Sexo</label>
+                <label for="masculino">Masculino</label>
+                <input type="checkbox" name="masculino" id="">
+                <label for="femenino">Femenino</label>
+                <input type="checkbox" name="femenino" id="">
+                
+            </div>
+
+            <div class="data">
+                <label for="vacio">9-Vacio</label>
+            </div>
+
+            <div class="data">
+                <label for="estudios">10-Estudios Cursados</label>
+                <select name="estudios" id="">
+                    <option value="">Seleccione su nivel academico</option>
+                    <option value="primario">Primario</option>
+                    <option value="secundario">Secundario</option>
+                    <option value="terciario">Terciario</option>
+                    <option value="universitario">Universitario</option>
+                </select>
+            </div>
+
+            <div class="data">
+                <label for="area">11-Area de Desempeño</label>
+                <select name="area" id="">
+                    <option value="">Seleccione su aréa</option>
+                    <option value="rrhh">RRHH</option>
+                    <option value="ventas">Ventas</option>
+                    <option value="sistemas">Sistemas</option>
+                </select>
+            </div>
+
+            <div class="data">
+                <label for="turno">12-Turno</label>
+                <select name="turno" id="">
+                    <option value="">Seleccione su turno</option>
+                    <option value="mañana">Mañana</option>
+                    <option value="tarde">Tarde</option>
+                    <option value="nombre">Noche</option>
+                </select>
+            </div>
+
+         
+        </div>
+
+        <div class="control__btn">
+            <button class="btn" type="submit">Enviar</button>
+            <button class="btn" type="reset">Reset</button>
+        </div>
+
+        <footer>
+            <h3>Pie de Formato</h3>
+        </footer>
+
+    </form>
+</body>
+</html>

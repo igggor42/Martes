@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movimientos de Stock</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    :root {
+      --header-h: 70px;
+      --footer-h: 40px;
+      --table-footer-h: 50px;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background: #f9f9dc;
+    }
+
+    header.app-header {
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: #f9f9dc;
+      border-bottom: 1px solid #999;
+    }
+    
+    header.app-header h1 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .controls button {
+      padding: 6px 12px;
+      border: 1px solid #666;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .table-viewport {
+      border: 2px solid #333;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .head-wrap {
+      background: #ff6666;
+    }
+    
+    .head-wrap table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    
+    .head-wrap th {
+      padding: 8px;
+      text-align: center;
+      border-right: 1px solid #ccc;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .body-wrap {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      background: #add8e6;
+    }
+    
+    .body-wrap table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    
+    .body-wrap td {
+      padding: 6px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      font-size: 12px;
+    }
+    
+    .body-wrap img {
+      max-width: 60px;
+      max-height: 40px;
+      object-fit: contain;
+    }
+
+    .foot-wrap {
+      height: var(--table-footer-h);
+      background: #ff6666;
+    }
+    
+    .foot-wrap table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      height: 100%;
+    }
+    
+    .foot-wrap td {
+      padding: 6px;
+      text-align: center;
+      border-right: 1px solid #ccc;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    footer.page-footer {
+      height: var(--footer-h);
+      background: #f9f9dc;
+      border-top: 1px solid #999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(255,255,255,0.5);
+      z-index: 40; display: none;
+    }
+
+    .modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 50; display: none; align-items: center; justify-content: center; padding: 16px;
+    }
+
+    .modal-content {
+      background: white; width: 100%; max-width: 1100px; max-height: 100%; overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    }
+
+    .modal-header { 
+      background-color: #9ca3af; 
+      padding: 12px 24px; 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+    }
+    
+    .modal-title { 
+      font-size: 18px; 
+      font-weight: bold; 
+      color: #000; 
+    }
+    
+    .btn-close { 
+      background: none; 
+      border: none; 
+      color: #dc2626; 
+      font-size: 24px; 
+      font-weight: bold; 
+      cursor: pointer; 
+      width: 30px; 
+      height: 30px; 
+      display:flex; 
+      align-items:center; 
+      justify-content:center; 
+    }
+    
+    .btn-close:hover { 
+      color: #991b1b; 
+    }
+
+    .modal-body {
+      background: #f8f8d6;
+      padding: 20px;
+    }
+
+    .show { 
+      display: flex !important; 
+    }
+    
+    .show-block { 
+      display: block !important; 
+    }
+
+    .formulario-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .formulario-container h2 {
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 40px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 6px;
+      border: 1px solid #aaa;
+      border-radius: 2px;
+    }
+
+    .btn-enviar {
+      grid-column: span 2;
+      padding: 12px;
+      background: #eee;
+      border: 1px solid #aaa;
+      cursor: pointer;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .btn-enviar:hover {
+      background: #ddd;
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .btn-enviar {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <h1>Movimientos de Stock</h1>
+    <div class="controls">
+      <button id="btnCargar">Cargar datos</button>
+      <button id="btnVaciar">Vaciar datos</button>
+      <button id="btnForm">Cargar Form</button>
+    </div>
+  </header>
+
+  <div class="table-viewport">
+    <div class="head-wrap">
+      <table>
+        <colgroup>
+          <col style="width: 10%">
+          <col style="width: 20%">
+          <col style="width: 10%">
+          <col style="width: 12%">
+          <col style="width: 15%">
+          <col style="width: 8%">
+          <col style="width: 8%">
+          <col style="width: 17%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>CodArtículo</th>
+            <th>Descripción</th>
+            <th>Nro Lote</th>
+            <th>Fecha Movimiento</th>
+            <th>Tipo Movimiento</th>
+            <th>Unidad</th>
+            <th>Cantidad</th>
+            <th>Foto</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <div class="body-wrap">
+      <table>
+        <colgroup>
+          <col style="width: 10%">
+          <col style="width: 20%">
+          <col style="width: 10%">
+          <col style="width: 12%">
+          <col style="width: 15%">
+          <col style="width: 8%">
+          <col style="width: 8%">
+          <col style="width: 17%">
+        </colgroup>
+        <tbody id="tabla-body">
+        </tbody>
+      </table>
+    </div>
+
+    <div class="foot-wrap">
+      <table>
+        <colgroup>
+          <col style="width: 10%">
+          <col style="width: 20%">
+          <col style="width: 10%">
+          <col style="width: 12%">
+          <col style="width: 15%">
+          <col style="width: 8%">
+          <col style="width: 8%">
+          <col style="width: 17%">
+        </colgroup>
+        <tfoot>
+          <tr>
+            <td>sum CodArtículo</td>
+            <td>sum Descripción</td>
+            <td>sum Nro Lote</td>
+            <td>sum Fecha Movimiento</td>
+            <td>sum Tipo Movimiento</td>
+            <td>sum Unidad</td>
+            <td>sum Cantidad</td>
+            <td>sum Foto</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <footer class="page-footer">Pie</footer>
+  <div id="modalOverlay" class="modal-overlay"></div>
+
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2 class="modal-title">Formulario de Movimientos de Stock</h2>
+        <button id="btnCerrarModal" class="btn-close" aria-label="Cerrar">×</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function () {
+      const $contenedor = $('body');
+      const $modal = $('#modal');
+      const $overlay = $('#modalOverlay');
+      const $modalBody = $('#modalBody');
+      const $modalTitle = $('.modal-title');
+      let movimientosData = [];
+      let tiposMovimiento = [];
+
+      function cargarDatos() {
+        return Promise.all([
+          $.getJSON('TablaPadre.json'),
+          $.getJSON('TablaHijo.json')
+        ]).then(function([padreData, hijoData]) {
+          movimientosData = padreData.MovimientosDeStock;
+          tiposMovimiento = hijoData.TipoDeMov;
+          return true;
+        }).catch(function(error) {
+          console.error('Error cargando datos:', error);
+          return false;
+        });
+      }
+
+      function mostrarTabla() {
+        const $tbody = $("#tabla-body").empty();
+        
+        if (movimientosData.length === 0) {
+          $tbody.html('<tr><td colspan="8" style="text-align: center; padding: 20px;">No hay datos disponibles</td></tr>');
+          return;
+        }
+        
+        $.each(movimientosData, function(index, mov) {
+          const tipo = tiposMovimiento.find(t => t.IdMov === mov.IdMov);
+          const fila = `
+            <tr>
+              <td>${mov.CodArticulo}</td>
+              <td>${mov.Descripcion}</td>
+              <td>${mov.NroDeLote}</td>
+              <td>${mov.FechaMovimiento}</td>
+              <td>${tipo ? tipo.Descripcion : mov.IdMov}</td>
+              <td>${mov.UnidadMedida}</td>
+              <td>${mov.Cantidad}</td>
+              <td><p>${mov.FotoArticulo || "No seleccionado"}</p></td>
+            </tr>
+          `;
+          $tbody.append(fila);
+        });
+      }
+
+      function crearFormularioModal() {
+        const formularioHTML = `
+          <div class="formulario-container">
+            <form id="formularioModal" method="get" action="respuesta.html">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="CodArticulo">Código de Artículo:</label>
+                  <input type="text" id="CodArticulo" name="CodArticulo" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="tipoMov">Tipo de Movimiento:</label>
+                  <select id="tipoMov" name="tipoMov" required>
+                    <option value="">Seleccione un tipo de movimiento</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="descripcion">Descripción:</label>
+                  <input type="text" id="descripcion" name="descripcion" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="fechaMov">Fecha Movimiento:</label>
+                  <input type="date" id="fechaMov" name="fechaMov" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="cantidad">Cantidad:</label>
+                  <input type="number" id="cantidad" name="cantidad" value="1" min="1" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="nroLote">Número de Lote:</label>
+                  <input type="text" id="nroLote" name="nroLote" placeholder="Ej: L-01" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="unidadMedida">Unidad de Medida:</label>
+                  <input type="text" id="unidadMedida" name="unidadMedida" placeholder="Ej: CAJ, U, M, KG" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="fotoArticulo">Foto del Artículo:</label>
+                  <input type="text" id="fotoArticulo" name="fotoArticulo" placeholder="Ej: caja_tuercas.jpg">
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn-enviar">ENVIAR FORMULARIO</button>
+              </div>
+            </form>
+          </div>
+        `;
+
+        $modalBody.html(formularioHTML);
+        poblarSelects();
+        configurarEventosFormulario();
+      }
+
+      function poblarSelects() {
+        const $selectTipo = $('#tipoMov');
+        $selectTipo.empty().append('<option value="">Seleccione un tipo de movimiento</option>');
+        
+        $.each(tiposMovimiento, function(index, tipo) {
+          $selectTipo.append(`<option value="${tipo.Codigo}">${tipo.Codigo} - ${tipo.Descripcion}</option>`);
+        });
+      }
+
+      function configurarEventosFormulario() {
+        $('#formularioModal').on('submit', function(e) {
+          e.preventDefault();
+          enviarFormulario();
+        });
+      }
+
+      function enviarFormulario() {
+        const formData = new FormData($('#formularioModal')[0]);
+        const params = new URLSearchParams();
+        
+        for (let [key, value] of formData.entries()) {
+          params.append(key, value);
+        }
+        
+        window.location.href = 'respuesta.html?' + params.toString();
+      }
+
+      function abrirModal() {
+        $modalTitle.text('Formulario de Movimientos de Stock');
+        $overlay.addClass('show-block');
+        $modal.addClass('show').attr('aria-hidden', 'false');
+        
+        setTimeout(function() {
+          $('#CodArticulo').focus();
+        }, 100);
+      }
+
+      function cerrarModal() {
+        $overlay.removeClass('show-block');
+        $modal.removeClass('show').attr('aria-hidden', 'true');
+      }
+
+      cargarDatos().then(function(success) {
+        if (success) {
+
+          $('#btnCargar').on('click', function() {
+            mostrarTabla();
+          });
+
+          $('#btnVaciar').on('click', function() {
+            $("#tabla-body").empty();
+          });
+
+          $('#btnForm').on('click', function() {
+            crearFormularioModal();
+            abrirModal();
+          });
+
+          $('#btnCerrarModal, #modalOverlay').on('click', cerrarModal);
+
+          $(document).on('keydown', function(e) {
+            if (e.key === 'Escape' && $modal.hasClass('show')) {
+              cerrarModal();
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
