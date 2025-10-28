@@ -14,7 +14,8 @@ $salidaJson = json_encode(['error' => 'Error de inicio de solicitud.']);
 
 //Conexion PDO
 try {
-    $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
+    // DSN actualizado para PostgreSQL
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
     $dbh = new PDO($dsn, $user, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -31,7 +32,8 @@ try {
 
  
     if (!empty($f_mov_codArt)) {
-        $sql .= " AND M.CodArticulo LIKE CONCAT('%', :codArt, '%')";
+        // Sintaxis de LIKE cambiada para PostgreSQL
+        $sql .= " AND M.CodArticulo LIKE '%' || :codArt || '%'";
         $parametros[':codArt'] = $f_mov_codArt;
     }
     if (!empty($f_mov_tipoMov)) {
@@ -39,23 +41,27 @@ try {
         $parametros[':idMov'] = $f_mov_tipoMov; 
     }
     if (!empty($f_mov_nroLote)) {
-        $sql .= " AND M.NroDeLote LIKE CONCAT('%', :nroLote, '%')";
+        // Sintaxis de LIKE cambiada para PostgreSQL
+        $sql .= " AND M.NroDeLote LIKE '%' || :nroLote || '%'";
         $parametros[':nroLote'] = $f_mov_nroLote;
     }
     if (!empty($f_mov_descripcion)) {
-        $sql .= " AND M.Descripcion LIKE CONCAT('%', :descripcion, '%')";
+        // Sintaxis de LIKE cambiada para PostgreSQL
+        $sql .= " AND M.Descripcion LIKE '%' || :descripcion || '%'";
         $parametros[':descripcion'] = $f_mov_descripcion;
     }
     if (!empty($f_mov_fecha)) {
-        $sql .= " AND M.FechaMovimiento LIKE CONCAT('%', :fecha, '%')";
+        // Sintaxis de LIKE cambiada para PostgreSQL (Nota: LIKE en un campo DATE puede ser problemático)
+        $sql .= " AND CAST(M.FechaMovimiento AS TEXT) LIKE '%' || :fecha || '%'";
         $parametros[':fecha'] = $f_mov_fecha;
     }
     if (!empty($f_mov_um)) {
-        $sql .= " AND M.UnidadMedida LIKE CONCAT('%', :um, '%')";
+        // Sintaxis de LIKE cambiada para PostgreSQL
+        $sql .= " AND M.UnidadMedida LIKE '%' || :um || '%'";
         $parametros[':um'] = $f_mov_um;
     }
     
-    //Agregamos el ordenamiento
+    // El ordenamiento es estándar, no necesita cambios
     $sql .= " ORDER BY M.$orden";
 
 
@@ -108,4 +114,3 @@ header('Content-Type: application/json');
 echo $salidaJson;
 
 ?>
-
