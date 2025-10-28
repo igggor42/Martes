@@ -63,7 +63,7 @@
         <div class="modal-content">
             <h2>Respuesta del servidor</h2>
             <div id="contenidoModalRespuesta"></div>
-            <button onclick="$('#ventanaModalRespuesta').css('visibility', 'hidden');">Cerrar</button>
+            <button onclick="$('#ventanaModalRespuesta').css('visibility', 'hidden');">Aceptar</button>
         </div>
     </div>
 
@@ -77,7 +77,7 @@
                     <li><label>Fecha Alta: </label><input type="date" id="formArticulosEntFechaAlta" name="fechaAlta" required /></li>
                     <li><label>Descripción: </label><input id="formArticulosEntDescripcionAlta" name="descripcion" required /></li>
                     <li><label>UM: </label><input id="formArticulosEntUmAlta" name="um" required /></li>
-                    <li><label>Saldo stock: </label><input id="formArticulosEntSaldoStockAlta" name="saldoStock" type="number" required /></li>
+                    <li><label>Saldo stock: </label><input id="formArticulosEntSaldoStockAlta" name="saldoStock" type="number" min="1" required /></li>
                     <li><label>Documento Pdf: </label><input type="file" id="formArticulosEntDocumentoPdfAlta" name="documentoPdf" /></li>
                 </ul>
                 <button type="submit" id="btEnvioFormAlta" disabled>Enviar Alta</button>
@@ -95,7 +95,7 @@
                     <li><label>Fecha Alta: </label><input type="date" id="formArticulosEntFechaAltaModi" name="fechaAlta" required /></li>
                     <li><label>Descripción: </label><input id="formArticulosEntDescripcionModi" name="descripcion" required /></li>
                     <li><label>UM: </label><input id="formArticulosEntUmModi" name="um" required /></li>
-                    <li><label>Saldo stock: </label><input id="formArticulosEntSaldoStockModi" name="saldoStock" type="number" required /></li>
+                    <li><label>Saldo stock: </label><input id="formArticulosEntSaldoStockModi" name="saldoStock" type="number" min="1" required /></li>
                     <li><label>Documento Pdf: </label><input type="file" id="formArticulosEntDocumentoPdfModi" name="documentoPdf" /></li>
                 </ul>
                 <button type="submit" id="btEnvioFormModi" disabled>Enviar Modi</button>
@@ -300,14 +300,38 @@
         }
 
         function cargarDatosIniciales() {
+            // Llamada a salidaJsonFamilias.php (simulada)
             fetch('./salidaJsonFamilias.php')
             .then(respuesta => respuesta.text())
             .then(datos => {
                 alert(datos); 
-                objGlobalFamilias = JSON.parse(datos);
-                // Se asume que llenaFiltroFamilias() poblaría los select de filtros
+                try {
+                    objGlobalFamilias = JSON.parse(datos);
+                } catch (e) {
+                    console.error("Error al parsear familias JSON: ", e);
+                    objGlobalFamilias = { familias: [] };
+                }
+                // Llenar select de filtro de familias
+                var selectFiltro = document.getElementById("filtroFamilia");
+                selectFiltro.innerHTML = "<option value=''>Seleccione Familia</option>";
+                objGlobalFamilias.familias.forEach(function(f) {
+                    selectFiltro.innerHTML += `<option value="${f.codFamilia}">${f.descripcionFamilia}</option>`;
+                });
             });
-            // Se asume que se llama a cargarTabla después de cargar las familias
+            
+            // Llamada a salidaJsonArticulos.php (simulada)
+            fetch('./salidaJsonArticulos.php')
+            .then(respuesta => respuesta.text())
+            .then(datos => {
+                alert(datos);
+                try {
+                    // La función cargarTabla debería ser llamada con los datos del servidor
+                    cargarTabla(JSON.parse(datos));
+                } catch (e) {
+                    console.error("Error al parsear artículos JSON: ", e);
+                    cargarTabla({ articulos: [] }); 
+                }
+            });
         }
 
 
@@ -355,5 +379,4 @@
         });
     </script>
 </body>
-
 </html>
