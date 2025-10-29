@@ -1,6 +1,3 @@
-<?php
-
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,9 +13,26 @@
             visibility: hidden;
         }
         .modal-content { 
+            position: relative;
             background: white; padding: 20px; border-radius: 5px; width: 80%; max-width: 600px; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+        
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .close-modal:hover {
+            color: #000;
+        }
+
         .tabla-articulos { border-collapse: collapse; width: 100%; margin-top: 10px; }
         .tabla-articulos th, .tabla-articulos td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         .btCelda { cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; }
@@ -60,15 +74,15 @@
 
     <div id="ventanaModalRespuesta" class="modal">
         <div class="modal-content">
-            <h2>Respuesta del servidor</h2>
+            <span class="close-modal">&times;</span> <h2>Respuesta del servidor</h2>
             <div id="contenidoModalRespuesta"></div>
-            <button onclick="$('#ventanaModalRespuesta').css('visibility', 'hidden');">Aceptar</button>
+            <button onclick="$('#ventanaModalRespuesta').css('visibility', 'hidden'); $('#contenedorTablaArticulos').removeClass('contenedorPasivo');">Cerrar</button>
         </div>
     </div>
 
     <div id="ventanaModalFormularioAlta" class="modal">
         <div class="modal-content">
-            <h2>Encabezado modal Formulario de alta</h2>
+            <span class="close-modal">&times;</span> <h2>Encabezado modal Formulario de alta</h2>
             <form id="formArticulosAlta" method="post" enctype="multipart/form-data">
                 <ul>
                     <li><label>codArt: </label><input id="formArticulosEntCodArtAlta" name="codArt" required /></li>
@@ -76,17 +90,18 @@
                     <li><label>Fecha Alta: </label><input type="date" id="formArticulosEntFechaAlta" name="fechaAlta" required /></li>
                     <li><label>Descripción: </label><input id="formArticulosEntDescripcionAlta" name="descripcion" required /></li>
                     <li><label>UM: </label><input id="formArticulosEntUmAlta" name="um" required /></li>
-                    <li><label>Saldo stock: </label><input id="formArticulosEntSaldoStockAlta" name="saldoStock" type="number" min="1" required /></li>
+                    <li><label>Saldo stock: </label><input id="formArticulosEntSaldoStockAlta" name="saldoStock" type="number" required /></li>
                     <li><label>Documento Pdf: </label><input type="file" id="formArticulosEntDocumentoPdfAlta" name="documentoPdf" /></li>
                 </ul>
                 <button type="submit" id="btEnvioFormAlta" disabled>Enviar Alta</button>
+                <button type="button" onclick="$('#ventanaModalFormularioAlta').css('visibility', 'hidden'); $('#contenedorTablaArticulos').removeClass('contenedorPasivo');">Cancelar</button>
             </form>
         </div>
     </div>
 
     <div id="ventanaModalFormularioModi" class="modal">
         <div class="modal-content">
-            <h2>Encabezado modal Formulario de modificación</h2>
+            <span class="close-modal">&times;</span> <h2>Encabezado modal Formulario de modificación</h2>
             <form id="formArticulosModi" method="post" enctype="multipart/form-data">
                 <ul>
                     <li><label>codArt: </label><input id="formArticulosEntCodArtModi" name="codArt" readonly required /></li>
@@ -94,16 +109,17 @@
                     <li><label>Fecha Alta: </label><input type="date" id="formArticulosEntFechaAltaModi" name="fechaAlta" required /></li>
                     <li><label>Descripción: </label><input id="formArticulosEntDescripcionModi" name="descripcion" required /></li>
                     <li><label>UM: </label><input id="formArticulosEntUmModi" name="um" required /></li>
-                    <li><label>Saldo stock: </label><input id="formArticulosEntSaldoStockModi" name="saldoStock" type="number" min="1" required /></li>
+                    <li><label>Saldo stock: </label><input id="formArticulosEntSaldoStockModi" name="saldoStock" type="number" required /></li>
                     <li><label>Documento Pdf: </label><input type="file" id="formArticulosEntDocumentoPdfModi" name="documentoPdf" /></li>
                 </ul>
                 <button type="submit" id="btEnvioFormModi" disabled>Enviar Modi</button>
+                <button type="button" onclick="$('#ventanaModalFormularioModi').css('visibility', 'hidden'); $('#contenedorTablaArticulos').removeClass('contenedorPasivo');">Cancelar</button>
             </form>
         </div>
     </div>
 
     <script>
-        var objGlobalFamilias = {}; 
+        var objGlobalFamilias = { familias: [] }; 
         var objTbDatos = document.getElementById("tbDatos");
 
         function todoListoParaAlta() {
@@ -135,6 +151,7 @@
             
             fetch('./traeDoc.php', options)
             .then(respuestaDelServer => {
+                alert("Binario recibido"); 
                 return respuestaDelServer.text(); 
             })
             .then(datos => {
@@ -163,7 +180,6 @@
             .then(datos => {
                 alert(datos); 
                 $("#ventanaModalFormularioAlta").css("visibility", "hidden");
-                $("#contenedorTablaArticulos").removeClass("contenedorPasivo");
                 
                 $("#contenidoModalRespuesta").empty(); 
                 $("#contenidoModalRespuesta").append(datos); 
@@ -189,7 +205,6 @@
                 alert(datos); 
                 
                 $("#ventanaModalFormularioModi").css("visibility", "hidden"); 
-                $("#contenedorTablaArticulos").removeClass("contenedorPasivo"); 
                 
                 $("#contenidoModalRespuesta").empty(); 
                 $("#contenidoModalRespuesta").append(datos); 
@@ -210,7 +225,7 @@
                 fetch('./baja.php', options)
                 .then(respuesta => respuesta.text())
                 .then(datos => {
-                    alert(datos);
+                    alert(datos); 
                     $("#contenidoModalRespuesta").empty(); 
                     $("#contenidoModalRespuesta").append(datos); 
                     $("#ventanaModalRespuesta").css("visibility", "visible"); 
@@ -238,11 +253,17 @@
                 }
                 selectFamilia.appendChild(objOption); 
             });
-            todoListoParaModi();
+            todoListoParaModi(); 
         }
 
         function cargarTabla(objDatos) {
             objTbDatos.innerHTML = "";
+            
+            if (!objDatos || !objDatos.articulos) {
+                console.error("Datos de artículos inválidos");
+                return;
+            }
+
             objDatos.articulos.forEach(function(argValor) {
                 var objFila = document.createElement("tr");
                 
@@ -299,37 +320,60 @@
         }
 
         function cargarDatosIniciales() {
-            // Llamada a salidaJsonFamilias.php (simulada)
             fetch('./salidaJsonFamilias.php')
             .then(respuesta => respuesta.text())
             .then(datos => {
-                alert(datos); 
+                alert("JSON Familias (raw): " + datos); 
                 try {
-                    objGlobalFamilias = JSON.parse(datos);
+                    if (datos) {
+                        objGlobalFamilias = JSON.parse(datos);
+                    } else {
+                        objGlobalFamilias = { familias: [] }; 
+                    }
                 } catch (e) {
-                    console.error("Error al parsear familias JSON: ", e);
-                    objGlobalFamilias = { familias: [] };
+                    console.error("Error parsing familias JSON (el archivo está vacío?):", e, datos);
+                    objGlobalFamilias = { familias: [] }; 
                 }
-                // Llenar select de filtro de familias
-                var selectFiltro = document.getElementById("filtroFamilia");
-                selectFiltro.innerHTML = "<option value=''>Seleccione Familia</option>";
-                objGlobalFamilias.familias.forEach(function(f) {
-                    selectFiltro.innerHTML += `<option value="${f.codFamilia}">${f.descripcionFamilia}</option>`;
+            })
+            .then(() => {
+                const data = new FormData();
+                data.append('orden', $("#orden").val());
+                data.append('filtroCodArt', $("#filtroCodArt").val());
+                data.append('filtroFamilia', $("#filtroFamilia").val());
+                data.append('filtroUM', $("#filtroUM").val());
+                data.append('filtroDescrip', $("#filtroDescrip").val());
+                data.append('filtroFechaAlta', $("#filtroFechaAlta").val());
+                data.append('filtroSaldoStock', $("#filtroSaldoStock").val());
+
+                let variablesAEnviar = "Variables enviadas al servidor (filtros y orden):\n";
+                for (var pair of data.entries()) {
+                    variablesAEnviar += pair[0] + ': ' + pair[1] + '\n';
+                }
+                alert(variablesAEnviar); 
+
+                const options = {
+                    method: 'POST',
+                    body: data
+                };
+
+                alert("Esperando respuesta..."); 
+                
+                fetch('./salidaJsonArticulos.php', options)
+                .then(respuesta => respuesta.text())
+                .then(datos => {
+                    alert("JSON Artículos (raw): " + datos); 
+                    try {
+                        if (datos) {
+                            const objDatos = JSON.parse(datos);
+                            cargarTabla(objDatos); 
+                        } else {
+                            cargarTabla({ articulos: [] }); 
+                        }
+                    } catch (e) {
+                        console.error("Error parsing articulos JSON (el archivo está vacío?):", e, datos);
+                        cargarTabla({ articulos: [] }); 
+                    }
                 });
-            });
-            
-            // Llamada a salidaJsonArticulos.php (simulada)
-            fetch('./salidaJsonArticulos.php')
-            .then(respuesta => respuesta.text())
-            .then(datos => {
-                alert(datos);
-                try {
-                    // La función cargarTabla debería ser llamada con los datos del servidor
-                    cargarTabla(JSON.parse(datos));
-                } catch (e) {
-                    console.error("Error al parsear artículos JSON: ", e);
-                    cargarTabla({ articulos: [] }); 
-                }
             });
         }
 
@@ -344,15 +388,32 @@
 
             $("#formArticulosAlta").submit(function(e) {
                 e.preventDefault(); 
-                alta();
-            });
+                
+                var stockValue = parseFloat($("#formArticulosEntSaldoStockAlta").val());
+                if (isNaN(stockValue) || stockValue < 1) {
+                    alert("Valor del stock del producto invalido");
+                    return;
+                }
 
+                if (confirm("¿Está seguro de insertar el registro? " + $("#formArticulosEntCodArtAlta").val())) {
+                    alta();
+                }
+            });
+            
             $("#formArticulosModi").submit(function(e) {
                 e.preventDefault(); 
+
+                var stockValue = parseFloat($("#formArticulosEntSaldoStockModi").val());
+                if (isNaN(stockValue) || stockValue < 1) {
+                    alert("Valor del stock del producto invalido");
+                    return;
+                }
+
                 if (confirm("¿Está seguro de modificar registro? " + $("#formArticulosEntCodArtModi").val())) {
                     modi();
                 }
             });
+
 
             $("#formArticulosAlta input").on('keyup change', todoListoParaAlta);
             $("#formArticulosAlta select").on('change', todoListoParaAlta);
@@ -365,6 +426,7 @@
                 $("#ventanaModalFormularioAlta").css("visibility", "visible"); 
                 var selectFamiliaAlta = document.getElementById("formArticulosEntFamiliaAlta");
                 selectFamiliaAlta.innerHTML = "";
+                
                 objGlobalFamilias.familias.forEach(function(argValorFamilia) {
                     var objOption = document.createElement("option"); 
                     objOption.setAttribute("value", argValorFamilia.codFamilia); 
@@ -372,11 +434,4 @@
                     selectFamiliaAlta.appendChild(objOption); 
                 });
                 todoListoParaAlta();
-            });
-
-            $("#cargarDatos").click(cargarDatosIniciales);
-        });
-    </script>
-</body>
-</html>
-
+   
