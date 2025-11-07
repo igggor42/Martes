@@ -2,7 +2,7 @@
 $host = "sql300.infinityfree.com";
 $dbname = "if0_40353352_datos";
 $usuario = "if0_40353352";
-$clave = "cNUwPTSc7H";
+$clave = "lfnNc871T8AnXD";
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
@@ -16,8 +16,7 @@ try {
      $pdo = new PDO($dsn, $usuario, $clave, $opciones);
 } catch (\PDOException $e) {
      http_response_code(500);
-     echo json_encode(['error' => 'Error de conexión a la base de datos.']);
+     echo json_encode(['error' => $e->getMessage()]);
      exit;
 }
-
 ?>
