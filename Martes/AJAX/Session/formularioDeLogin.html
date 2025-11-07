@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ingreso al Sistema</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background: #f4f7f6;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
+
+            .login-container {
+                background: #fff;
+                width: 100%;
+                max-width: 420px;
+                border-radius: 10px;
+                padding: 28px;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            }
+
+            h1 {
+                text-align: center;
+                color: #333;
+                margin-bottom: 8px;
+                font-size: 24px;
+            }
+
+            .subtitle {
+                text-align: center;
+                color: #666;
+                margin-bottom: 18px;
+                font-size: 13px;
+            }
+
+            .credentials-info {
+                background: #f8f9fa;
+                border-left: 4px solid #667eea;
+                padding: 12px;
+                margin-bottom: 18px;
+                border-radius: 4px;
+                color: #333;
+                font-size: 14px;
+            }
+
+            .form-group {
+                margin-bottom: 14px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 6px;
+                color: #333;
+                font-weight: 600;
+                font-size: 13px;
+            }
+
+            input[type="text"],
+            input[type="password"] {
+                width: 100%;
+                padding: 10px 12px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                font-size: 14px;
+                transition: border-color 0.15s;
+            }
+
+            button {
+                width: 100%;
+                padding: 12px;
+                background: #007bff;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 15px;
+                font-weight: 700;
+                cursor: pointer;
+            }
+
+            .error {
+                background: #fff0f0;
+                color: #b71c1c;
+                padding: 10px;
+                border-radius: 6px;
+                margin-bottom: 12px;
+                text-align: center;
+                border: 1px solid #ffd6d6;
+            }
+
+            @media (max-width: 480px) {
+                .login-container {
+                    padding: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="login-container">
+            <h1>Ingreso</h1>
+            <p class="subtitle">Acceda al sistema con su usuario y clave</p>
+
+            <div id="error-container"></div>
+
+            <div class="credentials-info">
+                <p>Usuario: admin</p> 
+                <hr>
+                <p>Clave: admin123</p></div>
+
+            <form id="login-form" action="ingresoAlSistema.php" method="POST">
+                <div class="form-group">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" required autocomplete="username" />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Clave:</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password" />
+                </div>
+
+                <button type="submit">Ingresar</button>
+            </form>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const params = new URLSearchParams(window.location.search);
+                if (params.has('error')) {
+                    const errorDiv = document.getElementById('error-container');
+                    errorDiv.innerHTML = '<div class="error">Usuario o clave incorrectos.</div>';
+                }
+            });
+        </script>
+    </body>
+</html>
