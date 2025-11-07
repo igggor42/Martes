@@ -1,8 +1,8 @@
 <?php
-$host = "127.0.0.1";
-$dbname = "tu_base_de_datos"; // <-- REEMPLAZA ESTO
-$usuario = "root";             // <-- REEMPLAZA ESTO
-$clave = "";                   // <-- REEMPLAZA ESTO
+$host = "sql300.infinityfree.com";
+$dbname = "if0_40353352_datos";
+$usuario = "if0_40353352";
+$clave = "cNUwPTSc7H";
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
@@ -19,4 +19,5 @@ try {
      echo json_encode(['error' => 'Error de conexión a la base de datos.']);
      exit;
 }
+
 ?>
