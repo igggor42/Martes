@@ -66,13 +66,14 @@ function mostrarPaginaIntermedia() {
     <body>
         <div class="container">
             <h1>Información de Sesión</h1>
-            <p><strong>Identificativo de sesión:</strong> ' . htmlspecialchars($_SESSION['session_id']) . '</p>
-            <p><strong>Login de usuario:</strong> ' . htmlspecialchars($_SESSION['usuario']) . '</p>
-            <p><strong>Contador de sesión:</strong> ' . htmlspecialchars($_SESSION['contador']) . '</p>
+            <p><br>Identificativo de sesión:</br> ' . htmlspecialchars($_SESSION['session_id']) . '</p>
+            <p><br>Login de usuario:</br> ' . htmlspecialchars($_SESSION['usuario']) . '</p>
+            <p><br>Contador de sesión:</br> ' . htmlspecialchars($_SESSION['contador']) . '</p>
             <button class="btn-primary" onclick="location.href=\'./app_modulo1/index.php\'">Ingrese al módulo</button>
             <button class="btn-secondary" onclick="location.href=\'destruirsesion.php\'">Terminar sesión</button>
         </div>
     </body>
     </html>';
 }
+
 ?>
