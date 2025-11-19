@@ -26,7 +26,7 @@ if ($hasTipodeMov) {
     $tipoField = null;
     $tipoFilterOn = null;
 }
-
+//crea una consulta capaz de añadirle filtros
 $sql = "SELECT m.*";
 $sql .= ", t.Descripcion as TipoMovDescripcion, t.Codigo as TipoMovCodigo";
 $sql .= " FROM MovimientosDeStock m ";
@@ -50,7 +50,7 @@ if (!empty($_GET['tipo_mov']) && $tipoFilterOn !== null) {
     $sql .= " AND $tipoFilterOn = ?";
     $params[] = trim($_GET['tipo_mov']);
 }
-
+//ordena
 $orderBy = $fechaCol !== null ? "m.$fechaCol" : 'm.CodArticulo';
 $sql .= " ORDER BY $orderBy DESC";
 
@@ -59,7 +59,7 @@ try {
     $stmt->execute($params);
     $movimientos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    //convertie los datos de foto a data URI (base64) para la entrega JSON
+    //convierte los datos de foto a data URI (base64) para la entrega JSON
     foreach ($movimientos as &$m) {
         if (!empty($m['FotoArticulo'])) {
             $mime = !empty($m['FotoMime']) ? $m['FotoMime'] : 'image/jpeg';
@@ -105,4 +105,5 @@ try {
     http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);
 }
+
 ?>
