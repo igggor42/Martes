@@ -15,7 +15,7 @@ if (isset($_SESSION['iduser']) && $_SERVER["REQUEST_METHOD"] != "POST") {
     exit();
 }
 
-//autentificacion e inicio de sesion
+//autentificacion del login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST['usuario'] ?? '';
     $password = $_POST['password'] ?? '';
@@ -77,4 +77,5 @@ function mostrarPaginaIntermedia() {
 }
 
 ?>
+
 
