@@ -3,7 +3,7 @@ include_once 'manejoDeSesion.inc.php';
 
 header('Content-Type: application/json');
 
-//buscar lista de tipos de movimientos
+//busca la lista de tipos de movimientos 
 try {
     $stmt = $pdo->query("SELECT IdMov, Codigo, Descripcion FROM TipoDeMov ORDER BY Descripcion");
     $tipos = $stmt->fetchAll();
@@ -14,3 +14,4 @@ try {
 }
 
 ?>
+
