@@ -104,6 +104,7 @@
                 }
             }
         </style>
+        
     </head>
     <body>
         <div class="login-container">
@@ -117,6 +118,8 @@
                 <hr>
                 <p>Clave: admin123</p></div>
 
+
+            //formulario
             <form id="login-form" action="ingresoAlSistema.php" method="POST">
                 <div class="form-group">
                     <label for="usuario">Usuario:</label>
@@ -132,6 +135,7 @@
             </form>
         </div>
 
+        //mensaje de error
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const params = new URLSearchParams(window.location.search);
@@ -142,4 +146,5 @@
             });
         </script>
     </body>
+
 </html>
