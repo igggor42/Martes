@@ -11,11 +11,12 @@ function autenticarUsuario($pdo, $usuario, $password) {
         $sql = "SELECT id_usuario as iduser, password, contador_sesiones FROM usuarios WHERE login = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$usuario]);
+        //array asociativo
         $user = $stmt->fetch();
 
         //compara claves encriptadas
         if ($user && $password_hasheada === $user['password']) {
-            //True
+            //True y devuelve el array asociativo
             return ['iduser' => $user['iduser'], 'contador' => $user['contador_sesiones']];
         } else {
             //False
@@ -25,4 +26,5 @@ function autenticarUsuario($pdo, $usuario, $password) {
         return false;
     }
 }
+
 ?>
